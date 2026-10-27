@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Entenda a força da sua senha com uma análise local e recomendações práticas.">
+  <title>FirePassJW — Verificador de senhas</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="FirePassJW, início">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M14 4a6 6 0 1 1-4.8 9.6L3 20H1v-3l6.5-6.2A6 6 0 0 1 14 4Z" stroke="currentColor" stroke-width="1.8"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/></svg>
+        </span>
+        FirePassJW
+      </a>
+      <span class="header-caption">Pequenos hábitos. Mais segurança.</span>
+      <span class="local-badge"><span class="status-dot"></span> Servidor local</span>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div class="eyebrow"><span></span> SUA SEGURANÇA COMEÇA AQUI</div>
+        <h1 id="page-title">Uma senha melhor.<br><span>Uma preocupação a menos.</span></h1>
+        <p>Descubra a força da sua senha e o que você pode melhorar.<br class="desktop-break"> Uma análise simples, em tempo real, sem guardar seus dados.</p>
+      </section>
+
+      <div class="workspace">
+        <section class="analyzer panel" aria-labelledby="analyzer-title">
+          <div class="panel-heading">
+            <div><span class="step-label">01 / EXPERIMENTE</span><h2 id="analyzer-title">Coloque sua senha à prova</h2></div>
+            <span class="outline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="11" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="15" r="1.4" fill="currentColor"/></svg></span>
+          </div>
+
+          <label class="input-label" for="password">Senha para analisar</label>
+          <div class="password-field">
+            <input id="password" type="password" placeholder="Digite uma senha de exemplo" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="password-help request-status" data-limit="{{ limite }}">
+            <button id="toggle-password" class="icon-button" type="button" aria-label="Mostrar senha" aria-pressed="false" title="Mostrar senha">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/></svg>
+            </button>
+          </div>
+          <div class="field-meta"><span id="password-help">Prefira exemplos, nunca sua senha real.</span><span id="character-count">0 caracteres</span></div>
+          <p id="request-status" class="request-status" role="status" aria-live="polite"></p>
+
+          <div class="strength-block" id="strength-block" data-level="empty">
+            <div class="strength-heading"><span>Força da senha</span><strong id="strength-label">Aguardando sua senha</strong></div>
+            <div id="strength-meter" class="strength-meter" role="progressbar" aria-label="Força estimada da senha" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-valuetext="Aguardando sua senha">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p id="strength-description">Cada caractere pode fazer a diferença.</p>
+          </div>
+
+          <div class="criteria-heading"><h3>O que estamos avaliando</h3><span id="criteria-count">0 de 5 critérios</span></div>
+          <ul class="criteria-list" id="criteria-list">
+            <li data-criterion="comprimento"><span class="criterion-icon" aria-hidden="true">✓</span><span>16 caracteres avaliados</span><span class="criterion-state sr-only">Não atendido</span></li>
+            <li data-criterion="maiusculas"><span class="criterion-icon" aria-hidden="true">✓</span><span>Letras maiúsculas <small>A–Z</small></span><span class="criterion-state sr-only">Não atendido</span></li>
+            <li data-criterion="minusculas"><span class="criterion-icon" aria-hidden="true">✓</span><span>Letras minúsculas <small>a–z</small></span><span class="criterion-state sr-only">Não atendido</span></li>
+            <li data-criterion="numeros"><span class="criterion-icon" aria-hidden="true">✓</span><span>Números <small>0–9</small></span><span class="criterion-state sr-only">Não atendido</span></li>
+            <li data-criterion="especiais"><span class="criterion-icon" aria-hidden="true">✓</span><span>Caracteres especiais <small>! @ #</small></span><span class="criterion-state sr-only">Não atendido</span></li>
+          </ul>
+          <div class="card-bottom"><span>Os critérios orientam; o comprimento também conta.</span><button id="clear-password" class="text-button" type="button" disabled>Limpar análise <span aria-hidden="true">↗</span></button></div>
+          <noscript><p class="noscript">Ative o JavaScript para receber a análise em tempo real.</p></noscript>
+        </section>
+
+        <aside class="side-column" aria-label="Recomendações e privacidade">
+          <section class="tips-card panel" aria-labelledby="tips-title">
+            <span class="step-label">02 / FORTALEÇA</span>
+            <div class="tips-heading"><h2 id="tips-title">Um pouco mais<br>de proteção.</h2><span class="spark" aria-hidden="true">✳</span></div>
+            <p class="tips-intro" id="tips-intro">Suas recomendações aparecem aqui, conforme você digita.</p>
+            <ul id="recommendations" class="recommendations"><li>Comece com uma senha longa. Uma frase com palavras pouco relacionadas pode ajudar.</li><li>Use uma senha diferente para cada conta.</li><li>Ative a autenticação em dois fatores sempre que possível.</li></ul>
+            <div class="tip-footer"><span aria-hidden="true">↗</span> Melhor que memorizar: use um gerenciador de senhas.</div>
+          </section>
+          <section class="privacy-card" aria-labelledby="privacy-title">
+            <span class="privacy-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 8 3v6c0 4-5 8-8 9-3-1-8-5-8-9V6l8-3Z" stroke="currentColor" stroke-width="1.7"/><path d="m8 12 3 3 5-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div><h3 id="privacy-title">Sua senha não fica aqui.</h3><p>A análise é feita no servidor local. Não gravamos senhas em arquivos, logs ou no armazenamento do navegador.</p></div>
+          </section>
+        </aside>
+      </div>
+
+      <section class="bottom-note" aria-label="Limites da análise"><span aria-hidden="true">ⓘ</span><p>Uma estimativa, não uma garantia. Usamos uma lista local ilustrativa de senhas conhecidas, sem consultar vazamentos. Frases fora dessa lista ainda podem receber notas altas.</p></section>
+    </main>
+    <footer class="site-footer"><span>FirePassJW <span class="footer-separator">/</span> Bons hábitos abrem caminhos.</span><span>Feito com Python & Flask <span aria-hidden="true">↗</span></span></footer>
+  </div>
+</body>
+</html>
